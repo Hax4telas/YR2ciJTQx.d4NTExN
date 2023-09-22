@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="pt-br"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no">
+    <meta name="description" content="Verificador de documentos assinados digitalmente no dr.consulta">
+    <meta name="robots" content="none">
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>Verificador de Documentos com Assinatura Digital | dr.consulta</title> 
+
+    <!-- Libraries -->
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="css/all.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/main.css" media="screen" rel="stylesheet">
+    <link href="css/print.css" media="print" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <img src="images/knife.svg" style="display: none;">
+    <img src="images/not-found.svg" style="display: none;">
+    <img src="images/fail.svg" style="display: none;">
+    <img src="images/book-ok.svg" style="display: none;">
+    <img src="images/calendar-atention.svg" "="" style="display: none;">
+
+    <div class="noPrintable" id="preloader">
+        <div id="status">
+            <div id="spinLoading" class=""></div>
+        </div>
+    </div>
+
+    <div id="contentsContainer">
+        <header>
+            <nav class="navbar navbar-light bg-light static-top">
+                <div class="container">
+                  <a id="imgLogo" class="navbar-brand logo" href="https://www.drconsulta.com" target="_blank"></a>
+                  <img id="imgLogoPrintable" src="images/logo-default.svg">
+                </div>
+            </nav>
+        </header>
+
+        <main class="container-fluid mt-32-n">
+                <div id="appNameWrapper" class="row mb-8-n">
+                    <div id="appNameContainer" class="container">
+                        <i id="appNameIcon" class="fas fa-fingerprint fa-4x"></i>
+                        <div id="appNameLabel" class="pl-8-n">
+                            Verificação de Documentos com Assinatura Digital
+                        </div>
+                    </div>
+                </div>
+    
+                <div id="formVerifyDocumentWrapper" class="row">         
+                    <form id="formVerifyDocument" method="POST" novalidate="novalidate" autocomplete="off">
+                        <p>Insira a chave de verificação para validar o documento.</p>
+                        <div class="form-row align-items-center">
+                            <div class="col-8">
+                                <label class="sr-only" for="verifierKey">Chave de verificação</label>
+                                <input type="text" class="form-control inputMedium mb-2 valid" id="verifierKey" name="verifierKey" placeholder="YR2ciJTQx.d4NTExK" data-inputmask="'mask': '# # # # # # # # # . # # # # # # #'" required="" im-insert="true" aria-invalid="false" readonly="">
+                                <small class="msg-required">*Campo obrigatório</small>
+                            </div>
+                            <div class="col-4" style="text-align: center;">
+                                <button id="btnSubmitVerifyDocument" type="button" class="buttonMedium mb-32-n buttonYellow" title="Documento verificado. Confirme a data de nascimento do paciente caso queira visualizar o(s) arquivo(s) associado(s) ao documento assinado." disabled="" style="cursor: not-allowed;">Verificar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+    
+                <div id="panelResult" class="row mt-8-n valid" style="">
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-10">
+                            <div id="resultVerifyDocumentWrapper" class="alert alertSucesso" role="alert">
+                                <div class="media">
+                                    <img id="resultVerifyDocumentIcon" src="assets/css/drc-base/images/icons/amarelo-com-azul/book-ok.svg" class="mr-3" alt="Documento válido">
+                                    <div class="media-body">
+                                        <h4 id="resultVerifyDocumentTitle" class="mt-0">Documento válido</h4>
+                                        <div id="resultVerifyDocumentBody"><h5 id="documentTypeLabel"><i class="fas fa-file-contract noPrintable"></i> Atestado Médico</h5><div id="viewSourceDocumentToogle" style="cursor: unset;" class="Purple noPrintable"></div><div id="checkSubjectData" style="" class="noPrintable"><div class="form-row align-items-center">
+                                                <form id="formVerifyDocumentWithSubjectCheck" method="POST" novalidate="novalidate" autocomplete="off">
+                                                    <div style="display: none;" class="row">
+                                                        <label class="sr-only" for="subjectAuthorize-IDENTITY_CPF">CPF</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend" style="margin-bottom: 8px; margin-right: -12px !important;">
+                                                                <div class="input-group-text" style="padding-left: 6px !important; padding-right: 16px !important;"><i class="far fa-id-card"></i></div>
+                                                            </div>
+                                                            <input style="font-size: 12px; width: 145px" type="text" class="form-control inputSmall mb-2" id="subjectAuthorize-IDENTITY_CPF" name="subjectAuthorize-IDENTITY_CPF" placeholder="CPF" data-inputmask="'mask': '999 . 999 . 999 - 99'" autofocus="" required="" im-insert="true">
+                                                            <i id="btnSubmitVerifyDocumentWithSubjectCheck" class="fas fa-chevron-circle-right" style="color:#ffffff; vertical-align: middle; font-size: 30px; margin-left: 5px; margin-top: 4px; cursor: pointer;" title="Verificar"></i>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div></div><p><b>Chave de verificação: </b>YR2ciJTQx.d4NTExK</p><p><b>Data da assinatura: </b>22/09/23 às 15:21:33</p><p id="signerName"><b>Assinado por: </b>Marcela Prado Goncalves Ferreira</p><div class="mt-8-n"><button id="btnShowCertificates" type="button" class="btn buttonSmall buttonLineGray dropdown-toggle" data-toggle="collapse" data-target="#collapseCertificates" aria-expanded="false" aria-controls="collapseCertificates"><i class="fas fa-certificate"></i> Certificados</button><div class="collapseOnly collapse" id="collapseCertificates"><div class="card card-body"><div id="titleCertificatesPrintable" style="display: none;"><i class="fas fa-certificate noPrintable"></i> Certificados:</div><ul id="certificatesList" class="list-group"><li class="list-group-item list-group-item-info"><i class="fas fa-caret-right"></i>&nbsp;&nbsp;C=BR, O=ICP-Brasil, OU=Instituto Nacional de Tecnologia da Informacao - ITI, CN=Autoridade Certificadora Raiz Brasileira v2</li><li class="list-group-item list-group-item-info">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-caret-right"></i>&nbsp;&nbsp;C=BR, O=ICP-Brasil, OU=Autoridade Certificadora Raiz Brasileira v2, CN=AC SOLUTI</li><li class="list-group-item list-group-item-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-caret-right"></i>&nbsp;&nbsp;C=BR, O=ICP-Brasil, OU=Autoridade Certificadora Raiz Brasileira v2, OU=AC SOLUTI, CN=AC SOLUTI Multipla</li><li class="list-group-item list-group-item-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-caret-right"></i>&nbsp;&nbsp;C=BR, O=ICP-Brasil, OU=Autoridade Certificadora Raiz Brasileira v2, OU=AC SOLUTI, OU=AC SOLUTI Multipla, OU=09461647000195, OU=Certificado PF A3, CN=MARCELA PRADO GONCALVES FERREIRA:372********</li></ul></div></div></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                </div>
+    
+                <div id="panelResult" class="row mt-8-n valid" style="">
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-10">
+                            <div id="resultVerifyDocumentWrapper" class="alert alertSucesso" role="alert">
+                                <div class="media">
+                                    <img id="resultVerifyDocumentIcon" src="assets/css/drc-base/images/icons/amarelo-com-azul/book-ok.svg" class="mr-3" alt="Documento válido">
+                                    <div class="media-body">
+                                        <h4 id="resultVerifyDocumentTitle" class="mt-0">Documento válido</h4>
+                                        <div id="resultVerifyDocumentBody"><h5 id="documentTypeLabel"><i class="fas fa-file-contract noPrintable"></i> Atestado Médico</h5><div id="viewSourceDocumentToogle" style="cursor: unset;" class="Purple noPrintable"></div><div id="checkSubjectData" style="" class="noPrintable"><div class="form-row align-items-center">
+                                                <form id="formVerifyDocumentWithSubjectCheck" method="POST" novalidate="novalidate" autocomplete="off">
+                                                    <div style="display: none;" class="row">
+                                                        <label class="sr-only" for="subjectAuthorize-IDENTITY_CPF">CPF</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend" style="margin-bottom: 8px; margin-right: -12px !important;">
+                                                                <div class="input-group-text" style="padding-left: 6px !important; padding-right: 16px !important;"><i class="far fa-id-card"></i></div>
+                                                            </div>
+                                                            <input style="font-size: 12px; width: 145px" type="text" class="form-control inputSmall mb-2" id="subjectAuthorize-IDENTITY_CPF" name="subjectAuthorize-IDENTITY_CPF" placeholder="CPF" data-inputmask="'mask': '999 . 999 . 999 - 99'" autofocus="" required="" im-insert="true">
+                                                            <i id="btnSubmitVerifyDocumentWithSubjectCheck" class="fas fa-chevron-circle-right" style="color:#ffffff; vertical-align: middle; font-size: 30px; margin-left: 5px; margin-top: 4px; cursor: pointer;" title="Verificar"></i>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div></div><p><b>Chave de verificação: </b>YR2ciJTQx.d4NTExK</p><p><b>Data da assinatura: </b>22/09/23 às 15:21:33</p><p id="signerName"><b>Assinado por: </b>Marcela Prado Goncalves Ferreira</p><div class="mt-8-n"><button id="btnShowCertificates" type="button" class="btn buttonSmall buttonLineGray dropdown-toggle" data-toggle="collapse" data-target="#collapseCertificates" aria-expanded="false" aria-controls="collapseCertificates"><i class="fas fa-certificate"></i> Certificados</button><div class="collapseOnly collapse" id="collapseCertificates"><div class="card card-body"><div id="titleCertificatesPrintable" style="display: none;"><i class="fas fa-certificate noPrintable"></i> Certificados:</div><ul id="certificatesList" class="list-group"><li class="list-group-item list-group-item-info"><i class="fas fa-caret-right"></i>&nbsp;&nbsp;C=BR, O=ICP-Brasil, OU=Instituto Nacional de Tecnologia da Informacao - ITI, CN=Autoridade Certificadora Raiz Brasileira v2</li><li class="list-group-item list-group-item-info">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-caret-right"></i>&nbsp;&nbsp;C=BR, O=ICP-Brasil, OU=Autoridade Certificadora Raiz Brasileira v2, CN=AC SOLUTI</li><li class="list-group-item list-group-item-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-caret-right"></i>&nbsp;&nbsp;C=BR, O=ICP-Brasil, OU=Autoridade Certificadora Raiz Brasileira v2, OU=AC SOLUTI, CN=AC SOLUTI Multipla</li><li class="list-group-item list-group-item-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-caret-right"></i>&nbsp;&nbsp;C=BR, O=ICP-Brasil, OU=Autoridade Certificadora Raiz Brasileira v2, OU=AC SOLUTI, OU=AC SOLUTI Multipla, OU=09461647000195, OU=Certificado PF A3, CN=MARCELA PRADO GONCALVES FERREIRA:372********</li></ul></div></div></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                </div>
+    
+                <div id="panelRequestInfo" class="row mt-8-n" style="">
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-10">
+                            <div class="alert alertMensagem" role="alert">
+                                <div id="panelRequestInfoBody"><p><b>Código de autenticidade: </b>c91ccda7-a548-4188-aa23-5c5ab4675ff2</p></div>
+                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                </div>
+				
+				<div id="panelRequestInfo" class="row mt-8-n" style="">
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-10">
+                            <div class="alert alertMensagem" role="alert">
+                                <div id="panelRequestInfoBody"><p><b>Código de autenticidade: </b>c91ccda7-a548-4188-aa23-5c5ab4675ff2</p></div>
+                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                </div>
+
+                <div id="panelPrintButton" class="row mt-32-n text-center" style="display: none;">
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-10">
+                        <button id="btnPrint" type="button" class="buttonSmall buttonGray mb-16-n"><i class="fas fa-print"></i> Imprimir</button>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                </div>
+        </main>
+    
+        <footer>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="media">
+                            <a href="https://www.drconsulta.com" target="_blank"><img id="footerLogoIcon" src="images/logo-default-reduzido.svg" class="align-self-center mr-3" alt="dr.consulta"></a>
+                            <div class="media-body">
+                                <h5 id="copyrightClaimLine1" class="Blue">© dr.consulta 2019</h5>
+                                <p id="copyrightClaimLine2" class="Blue" style="margin-bottom: 0;">Todos os direitos reservados.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <div id="modalViewSourceDocument" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div id="modalViewSourceDocumentHeader" class="modal-header">
+                        <h5 id="modalViewSourceDocumentTitle" class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                        </button>
+                    </div>
+                    <div id="modalViewSourceDocumentBody" class="modal-body">
+                        <p></p>
+                    </div>
+                    <div id="modalViewSourceDocumentFooter" class="modal-footer">
+                        <button type="button" class="btn buttonSmall buttonLineGray mr-16-n" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Core JavaScript -->
+    <script type="text/JavaScript" src="js/jquery.min.js"></script>
+    <script type="text/JavaScript" src="js/bootstrap.min.js"></script>
+    <script type="text/JavaScript" src="js/inputmask.min.js"></script>
+    <script type="text/JavaScript" src="js/jquery.inputmask.min.js"></script>
+    <script type="text/JavaScript" src="js/inputmask.binding.min.js"></script>
+    <script type="text/JavaScript" src="js/jquery.validate.min.js"></script>
+    <script type="text/JavaScript" src="js/vkbeautify.js"></script>
+    <script type="text/JavaScript" src="js/constants.js"></script>
+    <script type="text/JavaScript" src="js/main.js"></script>
+  
+
+
+
+ 
+</body></html>
